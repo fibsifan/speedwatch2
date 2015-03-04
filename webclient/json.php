@@ -1,29 +1,36 @@
 <?php
-    $username = "speedwatch";
-    $password = "speedwatch";
-    $host = "localhost";
-    $database="speedwatch";
+$username = "speedwatch";
+$password = "speedwatch";
+$host = "localhost";
+$database="speedwatch";
 
-    $server = mysql_connect($host, $username, $password);
-    $connection = mysql_select_db($database, $server);
+$server = mysql_connect($host, $username, $password);
+$connection = mysql_select_db($database, $server);
 
-    $myquery = "
-SELECT * FROM `SPEEDWATCH2`
-";
-    $query = mysql_query($myquery);
+$mindate=$_GET["mindate"];
+if ( ! $mindate ) {
+	$mindate = "'0000-00-00 00:00:00'";
+}
+$maxdate=$_GET["maxdate"];
+if ( ! $maxdate ) {
+	$maxdate = "NOW()";
+}
 
-    if ( ! $query ) {
-        echo mysql_error();
-        die;
-    }
+$myquery = "SELECT TIMESTAMP, DOWNLOAD, UPLOAD, PING FROM `SPEEDWATCH2` WHERE TIMESTAMP BETWEEN ".$mindate." AND ".$maxdate.";";
+$query = mysql_query($myquery);
 
-    $data = array();
+if ( ! $query ) {
+	echo mysql_error();
+	die;
+}
 
-    for ($x = 0; $x < mysql_num_rows($query); $x++) {
-        $data[] = mysql_fetch_assoc($query);
-    }
+$data = array();
 
-    echo json_encode($data);
+for ($x = 0; $x < mysql_num_rows($query); $x++) {
+	$data[] = mysql_fetch_assoc($query);
+}
 
-    mysql_close($server);
+echo json_encode($data);
+
+mysql_close($server);
 ?>
