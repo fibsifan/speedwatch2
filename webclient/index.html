@@ -54,14 +54,15 @@
 			var chart = c3.generate({
 				bindto: '#chart',
 				data: {
-					//json: [{timestamp:'2015-03-27 23:34:04',download:'28.85',upload:'1.30',ping:'73.814'}],
-					url: './csv.php',
-					//mimeType: 'json',
-					//keys: {
-					//	x: 'timestamp',
-					//	value: ['download', 'upload', 'ping']
-					//},
-					xFormat: '%Y-%m-%d %H:%M:%S'
+					//json: [{'timestamp':'2015-03-27 23:34:04','download':'28.85','upload':'1.30','ping':'73.814'}],
+					url: './json.php',
+					mimeType: 'json',
+					keys: {
+                        x: 'timestamp',
+                        xFormat: '%Y-%m-%d %H:%M:%S',
+						value: ['download', 'upload', 'ping']
+					},
+					xFormat: '%Y-%m-%d %H:%M:%S',
 					//names: {
 					//	data1: 'Download',
 					//	data2: 'Upload',

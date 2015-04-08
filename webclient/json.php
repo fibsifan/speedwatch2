@@ -9,7 +9,7 @@ $connection = mysql_select_db($database, $server);
 
 $mindate=$_GET["mindate"];
 if ( ! $mindate ) {
-	$mindate = "'0000-00-00 00:00:00'";
+	$mindate = "NOW() - INTERVAL 7 DAY";
 }
 $maxdate=$_GET["maxdate"];
 if ( ! $maxdate ) {
@@ -35,10 +35,10 @@ header("Pragma: no-cache");
 header("Expires: 0");
 $data = json_encode($data);
 
-//$data = str_replace('"TIMESTAMP"', 'timestamp', $data);
-//$data = str_replace('"DOWNLOAD"', 'download', $data);
-//$data = str_replace('"UPLOAD"', 'upload', $data);
-//$data = str_replace('"PING"', 'ping', $data);
+$data = str_replace('"TIMESTAMP"', '"timestamp"', $data);
+$data = str_replace('"DOWNLOAD"', '"download"', $data);
+$data = str_replace('"UPLOAD"', '"upload"', $data);
+$data = str_replace('"PING"', '"ping"', $data);
 
 echo $data;
 mysql_close($server);
