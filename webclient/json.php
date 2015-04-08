@@ -30,7 +30,16 @@ for ($x = 0; $x < mysql_num_rows($query); $x++) {
 	$data[] = mysql_fetch_assoc($query);
 }
 
-echo json_encode($data);
+header("Content-Type: application/json");
+header("Pragma: no-cache");
+header("Expires: 0");
+$data = json_encode($data);
 
+//$data = str_replace('"TIMESTAMP"', 'timestamp', $data);
+//$data = str_replace('"DOWNLOAD"', 'download', $data);
+//$data = str_replace('"UPLOAD"', 'upload', $data);
+//$data = str_replace('"PING"', 'ping', $data);
+
+echo $data;
 mysql_close($server);
 ?>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="utf-8">
+		<title>Speedwatch2</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/c3.min.css" rel="stylesheet" type="text/css" />
+		<style>
+			body {
+				padding-top: 70px;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Speedwatch2</a>
+				</div>
+				<div id="navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="#download">Download</a></li>
+						<li><a href="#upload">Upload</a></li>
+						<li><a href="#ping">Ping</a></li>
+						<li><a href="#about">About</a></li>
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</nav>
+		<div class="container" id="page-content">
+			<h1 id="all">All</h1>
+			<div id="chart"></div>
+			<h1 id="download">Download</h1>
+			<svg id="download-graph"></svg>
+			<h1 id="upload">Upload</h1>
+			<svg id="upload-graph"></svg>
+			<h1 id="ping">Ping</h1>
+			<svg id="ping-graph"></svg>
+			<h1 id="about">About</h1>
+		</div><!-- /.container -->
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/d3.js"></script>
+		<script type="text/javascript" src="js/c3.js"></script>
+		<!--<script type="text/javascript" src="js/speedwatch2.js"></script>-->
+		<script type="text/javascript">
+			var chart = c3.generate({
+				bindto: '#chart',
+				data: {
+					//json: [{timestamp:'2015-03-27 23:34:04',download:'28.85',upload:'1.30',ping:'73.814'}],
+					url: './csv.php',
+					//mimeType: 'json',
+					//keys: {
+					//	x: 'timestamp',
+					//	value: ['download', 'upload', 'ping']
+					//},
+					xFormat: '%Y-%m-%d %H:%M:%S'
+					//names: {
+					//	data1: 'Download',
+					//	data2: 'Upload',
+					//	data3: 'Ping'
+					//}
+				},
+				axis: {
+					x: {
+						type: 'timeseries',
+						tick: {
+							format: '%Y-%m-%d %H:%M:%S'
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
