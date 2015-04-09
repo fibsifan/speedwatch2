@@ -26,58 +26,49 @@
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="#download">Download</a></li>
-						<li><a href="#upload">Upload</a></li>
-						<li><a href="#ping">Ping</a></li>
 						<li><a href="#about">About</a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
 		</nav>
-		<div class="container" id="page-content">
-			<h1 id="all">All</h1>
-			<div id="chart"></div>
-			<h1 id="download">Download</h1>
-			<svg id="download-graph"></svg>
-			<h1 id="upload">Upload</h1>
-			<svg id="upload-graph"></svg>
-			<h1 id="ping">Ping</h1>
-			<svg id="ping-graph"></svg>
+        <div class="container" id="page-content">
+            <h1 id="Graph">Graph</h1>
+            <div id="graph"></div>
+            <h1 id="ping">Ping</h1>-->
+			<div id="ping-graph"></div>
 			<h1 id="about">About</h1>
 		</div><!-- /.container -->
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/d3.js"></script>
-		<script type="text/javascript" src="js/c3.js"></script>
-		<!--<script type="text/javascript" src="js/speedwatch2.js"></script>-->
-		<script type="text/javascript">
-			var chart = c3.generate({
-				bindto: '#chart',
-				data: {
-					//json: [{'timestamp':'2015-03-27 23:34:04','download':'28.85','upload':'1.30','ping':'73.814'}],
-					url: './json.php',
-					mimeType: 'json',
-					keys: {
+		<script type="text/javascript" src="js/d3.min.js"></script>
+		<script type="text/javascript" src="js/c3.min.js"></script>
+        <script type="text/javascript">
+            var graph = c3.generate({
+                bindto: '#graph',
+                data: {
+                    url: "./json.php",
+                    mimeType: "json",
+                    keys: {
                         x: 'timestamp',
                         xFormat: '%Y-%m-%d %H:%M:%S',
-						value: ['download', 'upload', 'ping']
-					},
-					xFormat: '%Y-%m-%d %H:%M:%S',
-					//names: {
-					//	data1: 'Download',
-					//	data2: 'Upload',
-					//	data3: 'Ping'
-					//}
-				},
-				axis: {
-					x: {
-						type: 'timeseries',
-						tick: {
-							format: '%Y-%m-%d %H:%M:%S'
-						}
-					}
-				}
-			});
+                        value: ['download', 'upload', 'ping'],
+                    },
+                    xFormat: '%Y-%m-%d %H:%M:%S',
+                    names: {
+                        download: 'Download',
+                        upload: 'Upload',
+                        ping: 'Ping',
+                    },
+                },
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%Y-%m-%d %H:%M:%S'
+                        }
+                    }
+                }
+            });
 		</script>
 	</body>
 </html>
