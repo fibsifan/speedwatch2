@@ -23,7 +23,7 @@ Copyright (c) 2015 Johannes Ballmann. See `LICENSE` for details. Except:
 
 [speedtest-cli]: https://github.com/sivel/speedtest-cli "speedtest-cli"
 [c3js]: http://c3js.org "c3.js"
-[c3jslicense]: https://github.com/masayuki0812/c3/blob/master/LICENSE "there".
+[c3jslicense]: https://github.com/masayuki0812/c3/blob/master/LICENSE "there"
 [masayuki0812]: https://github.com/masayuki0812 "Masayuki Tanaka"
 [d3js]: http://d3js.org "d3.js"
 [d3jslicense]: https://github.com/mbostock/d3/blob/master/LICENSE "there"
