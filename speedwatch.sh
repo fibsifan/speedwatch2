@@ -20,8 +20,8 @@ fi
 # The Speed test:
 $SPEEDTEST_CLI --simple > /tmp/speedwatch2.tmp
 PING=$(grep Ping /tmp/speedwatch2.tmp | sed s/'^Ping: \(.*\) ms$'/'\1'/)
-DOWNLOAD=$(grep Download /tmp/speedwatch2.tmp | sed s/'^Download: \(.*\) Mbits\/s$'/'\1'/)
-UPLOAD=$(grep Upload /tmp/speedwatch2.tmp | sed s/'^Upload: \(.*\) Mbits\/s$'/'\1'/)
+DOWNLOAD=$(grep Download /tmp/speedwatch2.tmp | sed s/'^Download: \(.*\) Mbit\/s$'/'\1'/)
+UPLOAD=$(grep Upload /tmp/speedwatch2.tmp | sed s/'^Upload: \(.*\) Mbit\/s$'/'\1'/)
 rm /tmp/speedwatch2.tmp
 
 # Build SQL file
