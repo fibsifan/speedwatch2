@@ -9,7 +9,7 @@ $connection = mysql_select_db($database, $server);
 
 $mindate=$_GET["mindate"];
 if ( ! $mindate ) {
-	$mindate = "NOW() - INTERVAL 4 DAY";
+	$mindate = "NOW() - INTERVAL 3 DAY";
 }
 $maxdate=$_GET["maxdate"];
 if ( ! $maxdate ) {
