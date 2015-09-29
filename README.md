@@ -2,8 +2,11 @@
 
 ## What this is
 
-This is a set of shell and R scripts, that measures internet speed and serves
-the data on a website. It relies on [speedtest-cli] by sivel.
+This is a shell script, that measures internet speed, and puts the data into
+a MySQL database. It relies on [speedtest-cli] by sivel.
+
+A simple webclient (based on [c3.js][c3js] and twitters [Bootstrap][bootstrap])
+can show it.
 
 ## How to use this
 
