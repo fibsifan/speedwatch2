@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 		<link href="css/c3.min.css" rel="stylesheet" type="text/css" />
-		<link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
 		<style>
 			body {
 				padding-top: 70px;
@@ -34,18 +34,23 @@
 		</nav>
 		<div class="container" id="page-content">
 			<h1 id="Graph">Graph</h1>
-			<form>
-				<label for="time-from">From</label>
-				<input id="time-from" type="date" />
-				<label for="time-to">To</label>
-				<input id="time-to" type="date" />
+			<form class="form-inline">
+				<div class="form-group">
+					<label for="time-from">From</label>
+					<input id="time-from" type="date" class="form-control" data-provide="datepicker" />
+				</div>
+				<div class="form-group">
+					<label for="time-to">To</label>
+					<input id="time-to" type="date" class="form-control" data-provide="datepicker" />
+				</div>
+				<button id="date-submit" class="btn btn-default" type="submit">Show!</button>
 			</form>
 			<div id="graph"></div>
 			<h1 id="about">About</h1>
 		</div><!-- /.container -->
 		<script type="text/javascript" src="js/jquery.min.js"></script>
-		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
 		<script type="text/javascript" src="js/d3.min.js"></script>
 		<script type="text/javascript" src="js/c3.min.js"></script>
 		<script type="text/javascript">
@@ -76,24 +81,16 @@
 				}
 			});
 		</script>
-		<script type="text/javascript">
-			$(function() {
-				$( "#time-from" ).datepicker({
-					defaultDate: "-3d",
-					changeMonth: true,
-					numberOfMonths: 3,
-					onClose: function( selectedDate ) {
-						$( "#time-to" ).datepicker( "option", "minDate", selectedDate );
-					}
-				});
-				$( "#time-to" ).datepicker({
-					changeMonth: true,
-					numberOfMonths: 3,
-					onClose: function( selectedDate ) {
-				        $( "#time-from" ).datepicker( "option", "maxDate", selectedDate );
-					}
-				});
+		<!--<script type="text/javascript">
+			$('#time-from').datepicker({
+				format: "dd. mm. yyyy",
+				weekStart: 1,
 			});
-		</script>
+			$('#time-to').datepicker({
+				format: "dd. mm. yyyy",
+				weekStart: 1,
+				todayBtn: "linked",
+			});
+		</script>-->
 	</body>
 </html>
