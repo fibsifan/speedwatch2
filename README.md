@@ -17,7 +17,7 @@ from your Browser.
 
 ## License
 
-Copyright (c) 2015 Johannes Ballmann. See `LICENSE` for details. Except:
+Copyright (c) 2016 Johannes Ballmann. See `LICENSE` for details. Except:
 
 * [c3.js][c3js], which is (c) [Masayuki Tanaka][masayuki0812],
   see [there][c3jslicense]
@@ -25,6 +25,8 @@ Copyright (c) 2015 Johannes Ballmann. See `LICENSE` for details. Except:
   see [there][d3jslicense]
 * [Bootstrap][bootstrap], which is (c) [Twitter, Inc.][twitter],
   see [there][bootstraplicense]
+* [bootstrap-datepicker.js][bootstrap-datepicker], which is (c) Stefan Petre
+  and Andrew Rowls.
 * [jQuery][jquery], which is (c) [jQuery Foundation][jQuery Foundation],
   see [there][jquerylicense]
 
@@ -46,6 +48,8 @@ Copyright (c) 2015 Johannes Ballmann. See `LICENSE` for details. Except:
   "Bootstrap"
 [bootstraplicense]: https://github.com/twbs/bootstrap/blob/master/LICENSE
   "there"
+[bootstrap-datepicker]: https://github.com/eternicode/bootstrap-datepicker
+  "bootstrap-datepicker"
 [twitter]: https://about.twitter.com/company
   "Twitter, Inc."
 [jquery]: http://jquery.com/
