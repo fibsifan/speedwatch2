@@ -4,8 +4,10 @@ $password = "speedwatch";
 $host = "localhost";
 $database="speedwatch";
 
-$server = mysql_connect($host, $username, $password);
-$connection = mysql_select_db($database, $server);
+$mysqli = new mysqli($host, $username, $password, $database);
+if ($mysqli->connect_errno) {
+    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+}
 
 $mindate=$_GET["mindate"];
 if ( ! $mindate ) {
@@ -17,16 +19,16 @@ if ( ! $maxdate ) {
 }
 
 $myquery = "SELECT TIMESTAMP, DOWNLOAD, UPLOAD, PING FROM `SPEEDWATCH2` WHERE TIMESTAMP BETWEEN ".$mindate." AND ".$maxdate.";";
-$query = mysql_query($myquery) or die ("Sql error: " . mysql_error());
+$res = $mysqli->query($myquery);
 
-$fields = mysql_num_fields ($query);
+$fields = $res->field_count;
 
 //for ($i = 0; $i < $fields; $i++ ) {
 //	$header .= '"' . mysql_field_name($query, $i) . '"' . "\t";
 //}
 $header = '"time", "download", "upload", "ping"';
 
-while( $row = mysql_fetch_row($query) ) {
+while( $row = $res->fetch_row() ) {
 	$line = '';
 	foreach( $row as $value ) {
 		if (( !isset ($value)) || ($value == "")) {
@@ -52,6 +54,5 @@ $data = $header . "\n" . $data;
 $data = str_replace ("\t", ", ", $data);
 echo $data;
 
-mysql_close($server);
-
+$mysqli->close();
 ?>

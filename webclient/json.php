@@ -4,8 +4,10 @@ $password = "speedwatch";
 $host = "localhost";
 $database="speedwatch";
 
-$server = mysql_connect($host, $username, $password);
-$connection = mysql_select_db($database, $server);
+$mysqli = new mysqli($host, $username, $password, $database);
+if ($mysqli->connect_errno) {
+    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+}
 
 $mindate=$_GET["mindate"];
 if ( ! $mindate ) {
@@ -17,17 +19,17 @@ if ( ! $maxdate ) {
 }
 
 $myquery = "SELECT TIMESTAMP, DOWNLOAD, UPLOAD, PING FROM `SPEEDWATCH2` WHERE TIMESTAMP BETWEEN ".$mindate." AND ".$maxdate.";";
-$query = mysql_query($myquery);
+$res = $mysqli->query($myquery);
 
-if ( ! $query ) {
-	echo mysql_error();
+if ( ! $res ) {
+	echo $mysqli->error();
 	die;
 }
 
 $data = array();
 
-for ($x = 0; $x < mysql_num_rows($query); $x++) {
-	$data[] = mysql_fetch_assoc($query);
+while ($row = $res->fetch_assoc()) {
+	$data[] = $row;
 }
 
 header("Content-Type: application/json");
@@ -41,5 +43,5 @@ $data = str_replace('"UPLOAD"', '"upload"', $data);
 $data = str_replace('"PING"', '"ping"', $data);
 
 echo $data;
-mysql_close($server);
+$mysqli->close();
 ?>
