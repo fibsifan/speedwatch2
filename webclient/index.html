@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 		<link href="css/c3.min.css" rel="stylesheet" type="text/css" />
-        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 		<style>
 			body {
 				padding-top: 70px;
@@ -32,48 +32,68 @@
 				</div><!--/.nav-collapse -->
 			</div>
 		</nav>
-        <div class="container" id="page-content">
-            <h1 id="Graph">Graph</h1>
-            <form>
-                <label for="time-from">From</label>
-                <input id="time-from" type="date" />
-                <label for="time-to">To</label>
-                <input id="time-to" type="date" />
-            </form>
-            <div id="graph"></div>
+		<div class="container" id="page-content">
+			<h1 id="Graph">Graph</h1>
+			<form>
+				<label for="time-from">From</label>
+				<input id="time-from" type="date" />
+				<label for="time-to">To</label>
+				<input id="time-to" type="date" />
+			</form>
+			<div id="graph"></div>
 			<h1 id="about">About</h1>
 		</div><!-- /.container -->
 		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/d3.min.js"></script>
 		<script type="text/javascript" src="js/c3.min.js"></script>
-        <script type="text/javascript">
-            var graph = c3.generate({
-                bindto: '#graph',
-                data: {
-                    url: "./json.php",
-                    mimeType: "json",
-                    keys: {
-                        x: 'timestamp',
-                        xFormat: '%Y-%m-%d %H:%M:%S',
-                        value: ['download', 'upload', 'ping'],
-                    },
-                    xFormat: '%Y-%m-%d %H:%M:%S',
-                    names: {
-                        download: 'Download',
-                        upload: 'Upload',
-                        ping: 'Ping',
-                    },
-                },
-                axis: {
-                    x: {
-                        type: 'timeseries',
-                        tick: {
-                            format: '%Y-%m-%d %H:%M:%S'
-                        }
-                    }
-                }
-            });
+		<script type="text/javascript">
+			var graph = c3.generate({
+				bindto: '#graph',
+				data: {
+					url: "./json.php",
+					mimeType: "json",
+					keys: {
+						x: 'timestamp',
+						xFormat: '%Y-%m-%d %H:%M:%S',
+						value: ['download', 'upload', 'ping'],
+					},
+					xFormat: '%Y-%m-%d %H:%M:%S',
+					names: {
+						download: 'Download',
+						upload: 'Upload',
+						ping: 'Ping',
+					},
+				},
+				axis: {
+					x: {
+						type: 'timeseries',
+						tick: {
+							format: '%Y-%m-%d %H:%M:%S'
+						}
+					}
+				}
+			});
+		</script>
+		<script type="text/javascript">
+			$(function() {
+				$( "#time-from" ).datepicker({
+					defaultDate: "-3d",
+					changeMonth: true,
+					numberOfMonths: 3,
+					onClose: function( selectedDate ) {
+						$( "#time-to" ).datepicker( "option", "minDate", selectedDate );
+					}
+				});
+				$( "#time-to" ).datepicker({
+					changeMonth: true,
+					numberOfMonths: 3,
+					onClose: function( selectedDate ) {
+				        $( "#time-from" ).datepicker( "option", "maxDate", selectedDate );
+					}
+				});
+			});
 		</script>
 	</body>
 </html>
