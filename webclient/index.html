@@ -36,12 +36,12 @@
 			<h1 id="Graph">Graph</h1>
 			<form id="date-form" class="form-inline">
 				<div class="form-group">
-					<label for="time-from">From</label>
-					<input id="time-from" type="date" class="form-control" />
+					<label for="date-from">From</label>
+					<input id="date-from" type="text" class="form-control" />
 				</div>
 				<div class="form-group">
-					<label for="time-to">To</label>
-					<input id="time-to" type="date" class="form-control" />
+					<label for="date-to">To</label>
+					<input id="date-to" type="text" class="form-control" />
 				</div>
 				<button id="date-submit" class="btn btn-default" type="button">Show!</button>
 			</form>
@@ -56,57 +56,74 @@
 		<script type="text/javascript">
 		</script>
 		<script type="text/javascript">
-			$('#time-from').datepicker({
-				format: "yyyy-mm-dd",
-				enddate: "0d",
-				weekStart: 1,
-			}).on("changeDate", function(date) {
-				var today = new Date();
-				var maxdate = today < date+21 ? today : date+21;
-				$('#time-from').datepicker("setStartDate", date-21);
-			});
-			$('#time-to').datepicker({
-				format: "yyyy-mm-dd",
-				enddate: "0d",
-				weekStart: 1,
-				todayBtn: "linked",
-			}).on("changeDate", function(date) {
-				$('#time-from').datepicker("setStartDate", date-21);
-			});
-			$('#time-to').datepicker("setDate", new Date());
-
-			$('#date-submit').click(function(){
-				loadData($('#time-from').val(), $('#time-to').val());
-			});
-			loadData = function(startdate, enddate) {
-				var url = "./json.php?mindate=" + startdate + "&maxdate=" + enddate;
-				var graph = c3.generate({
-					bindto: '#graph',
-					data: {
-						url: url,
-						mimeType: "json",
-						keys: {
-							x: 'timestamp',
+			$(function() {
+				var loadData = function(startdate, enddate) {
+					var url = "./json.php?mindate=" + startdate + "&maxdate=" + enddate;
+					var graph = c3.generate({
+						bindto: '#graph',
+						data: {
+							url: url,
+							mimeType: "json",
+							keys: {
+								x: 'timestamp',
+								xFormat: '%Y-%m-%d %H:%M:%S',
+								value: ['download', 'upload', 'ping'],
+							},
 							xFormat: '%Y-%m-%d %H:%M:%S',
-							value: ['download', 'upload', 'ping'],
+							names: {
+								download: 'Download',
+								upload: 'Upload',
+								ping: 'Ping',
+							},
 						},
-						xFormat: '%Y-%m-%d %H:%M:%S',
-						names: {
-							download: 'Download',
-							upload: 'Upload',
-							ping: 'Ping',
-						},
-					},
-					axis: {
-						x: {
-							type: 'timeseries',
-							tick: {
-								format: '%Y-%m-%d %H:%M:%S'
+						axis: {
+							x: {
+								type: 'timeseries',
+								tick: {
+									format: '%Y-%m-%d %H:%M:%S'
+								}
 							}
 						}
-					}
+					});
+				};
+				$('#date-from').datepicker({
+					format: "yyyy-mm-dd",
+					enddate: "0d",
+					weekStart: 1,
+					autoclose: true,
 				});
-			};
+				$('#date-from').on("changeDate", function(o) {
+					$('#date-to').datepicker("setStartDate", o.date);
+					var today = new Date();
+					var tmp_date = new Date(o.date.getTime());
+					tmp_date.setDate(tmp_date.getDate() + 21);
+					var end_date = today < tmp_date ? today : tmp_date;
+					$('#date-to').datepicker("setEndDate", end_date);
+				});
+				$('#date-to').datepicker({
+					format: "yyyy-mm-dd",
+					enddate: "0d",
+					weekStart: 1,
+					todayBtn: "linked",
+					autoclose: true,
+				});
+				$('#date-to').on("changeDate", function(o) {
+					otmp = o;
+					$('#date-from').datepicker("setEndDate", o.date);
+					var start_date = new Date(o.date.getTime());
+					start_date.setDate(start_date.getDate() - 21);
+					$('#date-from').datepicker("setStartDate", start_date);
+				});
+				to_date = new Date();
+				from_date = new Date();
+				from_date.setDate(from_date.getDate() - 4);
+				$('#date-to').datepicker("setDate", to_date);
+				$('#date-from').datepicker("setDate", from_date);
+
+				$('#date-submit').click(function(){
+					loadData($('#date-from').val(), $('#date-to').val());
+				});
+			});
 		</script>
 	</body>
 </html>
