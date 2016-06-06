@@ -12,10 +12,14 @@ if ($mysqli->connect_errno) {
 $mindate=$_GET["mindate"];
 if ( ! $mindate ) {
 	$mindate = "NOW() - INTERVAL 3 DAY";
+} else {
+    $mindate="STR_TO_DATE('".$mindate."', '%Y-%m-%d')";
 }
 $maxdate=$_GET["maxdate"];
 if ( ! $maxdate ) {
 	$maxdate = "NOW()";
+} else {
+    $maxdate="STR_TO_DATE('".$maxdate."', '%Y-%m-%d')";
 }
 
 $myquery = "SELECT TIMESTAMP, DOWNLOAD, UPLOAD, PING FROM `SPEEDWATCH2` WHERE TIMESTAMP BETWEEN ".$mindate." AND ".$maxdate.";";
