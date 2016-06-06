@@ -86,43 +86,45 @@
 						}
 					});
 				};
+
+				to_date = new Date();
+				var from_date = new Date();
+				from_date.setDate(from_date.getDate() - 4);
+
+				$('#date-to').datepicker({
+					format: "yyyy-mm-dd",
+					endDate: "tomorrow",
+					weekStart: 1,
+					todayBtn: "linked",
+					autoclose: true,
+				});
+				$('#date-to').datepicker("setDate", to_date);
+
 				$('#date-from').datepicker({
 					format: "yyyy-mm-dd",
-					enddate: "0d",
+					endDate: "today",
 					weekStart: 1,
 					autoclose: true,
 				});
 				$('#date-from').on("changeDate", function(o) {
 					$('#date-to').datepicker("setStartDate", o.date);
-					var today = new Date();
+					var tomorrow = new Date();
+					tomorrow.setDate(tomorrow.getDate() + 1);
 					var tmp_date = new Date(o.date.getTime());
 					tmp_date.setDate(tmp_date.getDate() + 21);
-					var end_date = today < tmp_date ? today : tmp_date;
+					var end_date = tomorrow < tmp_date ? tomorrow : tmp_date;
+					var current_to_date = $('#date-to').datepicker("getDate");
+					if(current_to_date.getDate() > end_date.getDate()) {
+						$('#date-to').datepicker("setDate", new Date(end_date.getTime()));
+					}
 					$('#date-to').datepicker("setEndDate", end_date);
 				});
-				$('#date-to').datepicker({
-					format: "yyyy-mm-dd",
-					enddate: "0d",
-					weekStart: 1,
-					todayBtn: "linked",
-					autoclose: true,
-				});
-				$('#date-to').on("changeDate", function(o) {
-					otmp = o;
-					$('#date-from').datepicker("setEndDate", o.date);
-					var start_date = new Date(o.date.getTime());
-					start_date.setDate(start_date.getDate() - 21);
-					$('#date-from').datepicker("setStartDate", start_date);
-				});
-				to_date = new Date();
-				from_date = new Date();
-				from_date.setDate(from_date.getDate() - 4);
-				$('#date-to').datepicker("setDate", to_date);
 				$('#date-from').datepicker("setDate", from_date);
 
 				$('#date-submit').click(function(){
 					loadData($('#date-from').val(), $('#date-to').val());
 				});
+
 				loadData($('#date-from').val(), $('#date-to').val());
 			});
 		</script>
