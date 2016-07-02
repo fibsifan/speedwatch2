@@ -87,9 +87,12 @@
 					});
 				};
 
-				to_date = new Date();
+				var to_date = new Date();
+				to_date.setDate(to_date.getDate() + 1);
+				to_date.setHours(0,0,0,0);
 				var from_date = new Date();
 				from_date.setDate(from_date.getDate() - 4);
+				from_date.setHours(0,0,0,0);
 
 				$('#date-to').datepicker({
 					format: "yyyy-mm-dd",
@@ -107,21 +110,32 @@
 					autoclose: true,
 				});
 				$('#date-from').on("changeDate", function(o) {
-					$('#date-to').datepicker("setStartDate", o.date);
+					// calculating end date
 					var tomorrow = new Date();
 					tomorrow.setDate(tomorrow.getDate() + 1);
-					var tmp_date = new Date(o.date.getTime());
-					tmp_date.setDate(tmp_date.getDate() + 21);
-					var end_date = tomorrow < tmp_date ? tomorrow : tmp_date;
+					tomorrow.setHours(0,0,0,0);
+					var future_date = new Date(o.date.getTime());
+					future_date.setDate(future_date.getDate() + 21);
+					future_date.setHours(0,0,0,0);
+					var from_date = new Date(o.date.getTime());
+					from_date.setHours(0,0,0,0);
+					var end_date = tomorrow < future_date ? tomorrow : future_date;
+
+					// bringing to_date into correct time frame
 					var current_to_date = $('#date-to').datepicker("getDate");
-					if(current_to_date.getDate() > end_date.getDate()) {
-						$('#date-to').datepicker("setDate", new Date(end_date.getTime()));
-					}
 					$('#date-to').datepicker("setEndDate", end_date);
+					$('#date-to').datepicker("setStartDate", from_date);
+					if(current_to_date.getTime() > end_date.getTime()) {
+						$('#date-to').datepicker("setDate", new Date(end_date.getTime()));
+					} else if(current_to_date.getTime() < from_date.getTime()) {
+						$('#date-to').datepicker("setDate", new Date(tomorrow.getTime()));
+					} else {
+						$('#date-to').datepicker("setDate", new Date(current_to_date.getTime()));
+					}
 				});
 				$('#date-from').datepicker("setDate", from_date);
 
-				$('#date-submit').click(function(){
+				$('#date-submit').click(function() {
 					loadData($('#date-from').val(), $('#date-to').val());
 				});
 
