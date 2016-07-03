@@ -40,5 +40,5 @@ echo "INSERT INTO SPEEDWATCH2 (DOWNLOAD, UPLOAD, PING)" >> /tmp/speedwatch2.sql
 echo "VALUES ($DOWNLOAD, $UPLOAD, $PING);" >> /tmp/speedwatch2.sql
 # Insert into mysql
 $MYSQL_CLI --user=$MYSQL_USER --password=$MYSQL_PASS $MYSQL_DB < /tmp/speedwatch2.sql
-#rm /tmp/speedwatch2.sql
+rm /tmp/speedwatch2.sql
 
