@@ -63,7 +63,7 @@
 						bindto: '#graph',
 						data: {
 							url: url,
-							mimeType: "json",
+							mimeType: 'json',
 							keys: {
 								x: 'timestamp',
 								xFormat: '%Y-%m-%d %H:%M:%S',
@@ -75,15 +75,37 @@
 								upload: 'Upload',
 								ping: 'Ping',
 							},
+							axes: {
+								upload: 'y',
+								download: 'y',
+								ping: 'y2',
+							},
 						},
 						axis: {
 							x: {
+								label: {
+									text: 'Zeit',
+									position: 'outer-center'
+								},
 								type: 'timeseries',
 								tick: {
 									format: '%Y-%m-%d %H:%M:%S'
-								}
-							}
-						}
+								},
+							},
+							y: {
+								label: {
+									text: 'Up-/Download',
+									position: 'outer-middle',
+								},
+							},
+							y2: {
+								show: true,
+								label: {
+									text: 'Ping',
+									position: 'outer-middle',
+								},
+							},
+						},
 					});
 				};
 
