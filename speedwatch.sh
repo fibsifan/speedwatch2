@@ -18,14 +18,16 @@ if [ ! -x $MYSQL_CLI ]; then
 fi
 
 # The Speed test:
-$SPEEDTEST_CLI --simple > /tmp/speedwatch2.tmp
-PING=$(grep Ping /tmp/speedwatch2.tmp | sed s/'^Ping: \(.*\) ms$'/'\1'/)
-DOWNLOAD=$(grep Download /tmp/speedwatch2.tmp | sed s/'^Download: \(.*\) Mbit\/s$'/'\1'/)
-UPLOAD=$(grep Upload /tmp/speedwatch2.tmp | sed s/'^Upload: \(.*\) Mbit\/s$'/'\1'/)
-rm /tmp/speedwatch2.tmp
+SPEEDTEST_TMP=$(tmpfile)
+$SPEEDTEST_CLI --simple > ${SPEEDTEST_TMP}
+PING=$(grep Ping ${SPEEDTEST_TMP} | sed s/'^Ping: \(.*\) ms$'/'\1'/)
+DOWNLOAD=$(grep Download ${SPEEDTEST_TMP} | sed s/'^Download: \(.*\) Mbit\/s$'/'\1'/)
+UPLOAD=$(grep Upload ${SPEEDTEST_TMP} | sed s/'^Upload: \(.*\) Mbit\/s$'/'\1'/)
+rm ${SPEEDTEST_TMP}
 
 # Build SQL file
-cat << "EOF" > /tmp/speedwatch2.sql
+SPEEDTEST_SQL=$(tmpfile)
+cat << "EOF" > ${SPEEDTEST_SQL}
 CREATE TABLE IF NOT EXISTS `SPEEDWATCH2` (
 	`ID` int unsigned NOT NULL auto_increment,
 	`TIMESTAMP` timestamp NOT NULL,
@@ -36,9 +38,9 @@ CREATE TABLE IF NOT EXISTS `SPEEDWATCH2` (
 	);
 EOF
 
-echo "INSERT INTO SPEEDWATCH2 (DOWNLOAD, UPLOAD, PING)" >> /tmp/speedwatch2.sql
-echo "VALUES ($DOWNLOAD, $UPLOAD, $PING);" >> /tmp/speedwatch2.sql
+echo "INSERT INTO SPEEDWATCH2 (DOWNLOAD, UPLOAD, PING)" >> ${SPEEDTEST_SQL}
+echo "VALUES ($DOWNLOAD, $UPLOAD, $PING);" >> ${SPEEDTEST_SQL}
 # Insert into mysql
-$MYSQL_CLI --user=$MYSQL_USER --password=$MYSQL_PASS $MYSQL_DB < /tmp/speedwatch2.sql
-rm /tmp/speedwatch2.sql
+$MYSQL_CLI --user=$MYSQL_USER --password=$MYSQL_PASS $MYSQL_DB < ${SPEEDTEST_SQL}
+rm ${SPEEDTEST_SQL}
 
